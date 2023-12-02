@@ -1,0 +1,144 @@
+@startuml
+class Produto{
+  - id: Long
+  - nome: String
+  - valor: Integer
+  - quantEstoque: Integer
+  - descrição: String
+}
+class Capinha {
+  - id: Long
+  - modelo: Modelo
+  - cor: Cor
+}
+class Pelicula{
+  - id: Long
+  - tipo: String
+}
+
+class Modelo {
+  - id: Long
+  - nome: String
+  - marca: String
+}
+
+ENUM Cor {
+  - id: Long
+  - nome: String
+}
+
+class ItemVenda {
+  - id: Long
+  - livro: Livro
+  - quantidade: Integer
+  - valorUnitario: BigDecimal
+  - valorTotal: BigDecimal
+}
+
+class Venda{
+  - id: Long
+  - cliente: Cliente
+  - valorTotal: BigDecimal
+  - desconto: BigDecimal
+}
+
+class Pagamento {
+  - id: Long
+  - tipo: String
+  - valor: BigDecimal
+}
+
+class CartaoDeCredito {
+  - numeroCartao: String
+  - dataValidade: LocalDate
+  - codigoSeguranca: String
+  - id: Long
+  - bandeira: String
+}
+
+class BoletoBancario {
+  - id: Long
+  - banco: String
+  - numeroBoleto: String
+  - dataVencimento: LocalDate
+}
+
+class Pix {
+  - id: Long
+  - chavePix: String
+}
+
+class Usuario {
+  - id: Long
+  - nome: String
+  - email: String
+  - senha: String
+  - cpf: String
+}
+
+class Cliente {
+  - id: Long
+  - nome: String
+  - dataNascimento: Date
+  - cpf: String
+}
+
+class Administrador {
+  - id: Long
+  - matricula: Integer
+}
+
+class Endereco {
+  - id: Long
+  - logradouro: String
+  - numero: String
+  - complemento: String
+  - bairro: String
+  - cidade: String
+  - cep: String
+}
+class Telefone{
+  - id: Long
+  - codArea: String
+  - numero: String
+}
+
+ENUM Estado {
+  - id: Long
+  - nome: String
+  - sigla: String
+}
+
+Cliente "1" o--> "*" Endereco
+
+Cliente "1" o--> "*" Telefone
+
+Endereco "*" *--> "1" Estado
+
+Usuario "1" <|-- "*" Cliente
+
+Usuario "1" <|-- "*" Administrador
+
+ItemVenda "1" o--> "*" Produto
+
+Produto "1" <|-- "*" Capinha
+
+Produto "1" <|-- "*" Pelicula
+
+Produto "1" o--> "*" Modelo
+
+Capinha "*" *--> "1" Cor
+
+Pagamento "1" o--> "*" CartaoDeCredito
+
+Pagamento "1" o--> "*" BoletoBancario
+
+Pagamento "1" o--> "*" Pix
+
+Venda"1" o--> "*" Cliente
+
+Venda"1" o--> "*" Endereco
+
+Venda"1" o--> "*" ItemVenda 
+
+Venda"1" o--> "1" Pagamento
